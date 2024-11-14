@@ -1,0 +1,48 @@
+# Nodes
+# Qty
+# NodeNumber CoordX(m) CoordY(m)
+4
+1   0   0
+2   4   0
+3   0   3
+4   4   3
+# Barras
+# Qty
+# BarNumber Node1 Node2 Type Property Material
+5
+1   1   3   FRAME   1   1
+2   2   4   FRAME   1   1
+3   3   4   FRAME   2   1
+4   3   2   TRUSS   3   2
+5   1   4   TRUSS   3   2
+# Materiales
+# Qty
+# MatNumber Name E(GPa) Poiss Densidad(kg/m3)
+2
+1   STEEL_A992  200 0.3 7850
+2   STEEL_A36   200 0.3 7850
+# Propiedades
+# Qty
+# PropNumber Name A(mm2) I(E06 mm4)
+3
+1   COLUMN  400 300
+2   BEAM    450 600
+3   TENSOR  50  25
+# Supports
+# Qty
+# NodeNumber    TX(1 or 0)  TY(1 or 0)  RZ(1 or 0)
+2
+1   1   1   0
+2   0   1   0
+# Loads - Nodal
+# Qty
+# NodeNumber    FX(kN)  FY(kN)  MZ(kN-m)
+2
+3   10  0   0
+4   0   -10 20
+# Load - Member
+# Qty
+# BarNumber a(m)    Fa(kN/m)    b(m)    Fb(kN/m)
+1
+3   0.1 -10.0   2.0   -15.0
+
