@@ -1,0 +1,5 @@
+.DS_Store
+__pycache__/IOFiles.cpython-311.pyc
+__pycache__/Routines.cpython-311.pyc
+__pycache__/Solver.cpython-311.pyc
+cale.py
