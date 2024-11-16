@@ -338,7 +338,7 @@ def GenerateElementFixedEndForces(model) :
                 break
         
         # Este tipo de caras solo funcionan con el FRAME
-        if bar["Type"] == "FRAME" :
+        if appliedBarForce["Type"] == "FRAME" :
             L  = appliedBarForce["Length"]
             a  =  barForce["a"]
             wa = -barForce["wa"] # Sentido -Y local es positivo en las FixedEndMoment_FRAME

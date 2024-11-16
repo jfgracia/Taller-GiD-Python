@@ -1,6 +1,21 @@
 import numpy as np
 
 # Ensamblajes
+#
+# [K]{D} + {QF} = {Q}
+#
+# | K11 K12 | * | Du |  + | QF1 | = | Q1     |
+# | K21 K22 |   | Dk |    | QF2 | = | Q2 + R |
+#
+
+# Rutina que ensambla la matriz de rigidez K
+#
+# Entrada:     
+#       model: Diccionario con el modelo
+#       dofData: Diccionario con la información de los DOF
+#
+# Salida:
+#       K:  Diccionario con la matriz de rigidez particionada
 def AssembleStiffnessMatrix(model,dofData) :
 
     dofCount = dofData["DOFCount"]  
@@ -15,8 +30,8 @@ def AssembleStiffnessMatrix(model,dofData) :
         Te = barMatrices["T"]
         Ke = Te.transpose() @ ke @ Te
         for i in range(0,Ke.shape[0]) :
+            ii = barDOF[i]
             for j in range(0,Ke.shape[1]) :
-                ii = barDOF[i]
                 jj = barDOF[j]
                 K[ii,jj] += Ke[i,j]
 
@@ -34,7 +49,14 @@ def AssembleStiffnessMatrix(model,dofData) :
             "K21" : K21,
             "K22" : K22}
 
-
+# Rutina que ensambla el vector de cargas de empotramiento perfecto QF
+#
+# Entrada:     
+#       model: Diccionario con el modelo
+#       dofData: Diccionario con la información de los DOF
+#
+# Salida:
+#       QF:  Diccionario el vector de cargas QF particionado 
 def AssebembleElementForcesVector(model,dofData) :
 
     dofCount = dofData["DOFCount"]  
@@ -61,6 +83,15 @@ def AssebembleElementForcesVector(model,dofData) :
     return {"QF1" : QF1,
             "QF2" : QF2}
 
+
+# Rutina que ensambla el vector de cargas Q
+#
+# Entrada:     
+#       model: Diccionario con el modelo
+#       dofData: Diccionario con la información de los DOF
+#
+# Salida:
+#       Q:  Diccionario el vector de cargas Q particionado 
 def AssembleForceVector(model,dofData):
 
     dofCount       = dofData["DOFCount"] 
@@ -89,6 +120,17 @@ def AssembleForceVector(model,dofData):
 
 # Soluciones
 
+# Rutina que soluciona para los desplazamientos desconocidos Du
+#
+# 
+# | K11 K12 | * | Du |  + | QF1 | = | Q1     |
+# | K21 K22 |   | Dk |    | QF2 | = | Q2 + R |
+#
+# Primer renglón
+# K11 * Du + K12 * Dk + QF1 = Q1
+#
+# Solucion
+# Du = K11^(-1) * ( Q1 - QF1 - K12 * Dk )
 def SolveDisplacements(K,QF,Q,Dk) :
 
     K11 = K["K11"]
@@ -100,6 +142,17 @@ def SolveDisplacements(K,QF,Q,Dk) :
 
     return Du
 
+# Rutina que soluciona para las Reacciones R
+#
+# 
+# | K11 K12 | * | Du |  + | QF1 | = | Q1     |
+# | K21 K22 |   | Dk |    | QF2 | = | Q2 + R |
+#
+# Segundo renglón
+# K21 * Du + K122 * Dk + QF2 = Q2 + R
+#
+# Solucion
+# R = K21 * Du + K122 * Dk + QF2 - Q2
 def SolveReactions(K,QF,Q,D) :
 
     K21 = K["K21"]
@@ -113,6 +166,11 @@ def SolveReactions(K,QF,Q,D) :
 
     return R
 
+# Rutina que soluciona para las fuerzas elementales
+#
+# qe = ke * Te * De + qF
+#
+# El resultado se añade al diccionario de la barra
 def SolveElementForces(model,D) :
 
     Du = D["Du"]
@@ -124,14 +182,14 @@ def SolveElementForces(model,D) :
     for bar in bars :
         barDOF = bar["BarDOF"]
         size = len(barDOF)
-        de = np.full((size,1),0.0)
+        De = np.full((size,1),0.0)
         for i in range(0,size) :
             dof = barDOF[i]
-            de[i,0] = Disp[dof,0]
+            De[i,0] = Disp[dof,0]
         barMatrices = bar["BarMatrices"]   
         ke = barMatrices["k"]
         Te = barMatrices["T"]
-        qe = ke @ Te @ de
+        qe = ke @ Te @ De
         if bar.get("qF") is not None:
             qF = bar["qF"]
             qe = qe + qF
