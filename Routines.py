@@ -337,16 +337,26 @@ def GenerateElementFixedEndForces(model) :
             if barID == bar["ID"] :
                 appliedBarForce = bar
                 break
-        
-        L  = appliedBarForce["Length"]
-        a  =  barForce["a"]
-        wa = -barForce["wa"] # Sentido -Y local es positivo en las FixedEndMoment_FRAME
-        b  =  barForce["b"]
-        wb = -barForce["wb"] #  Sentido -Y local es positivo en las FixedEndMoment_FRAME
-        qF = FixedEndMoment_FRAME(L,a,wa,b,wb)
 
-        appliedBarForce.update({"qf" : qF})
-        # Necesitamos revisar si la barra ya trae otro qF calculado previamente
-        # por si a la misma barra le aplicamos mas de una carga.
+        # Este tipo de cargas solo funcionan con elementos tipo FRAME
+        if appliedBarForce["Type"] == "FRAME" :
+            L  = appliedBarForce["Length"]
+            a  =  barForce["a"]
+            wa = -barForce["wa"] # Sentido -Y local es positivo en las FixedEndMoment_FRAME
+            b  =  barForce["b"]
+            wb = -barForce["wb"] #  Sentido -Y local es positivo en las FixedEndMoment_FRAME
+            qF = FixedEndMoment_FRAME(L,a,wa,b,wb)
+
+            # Tiene o no un qF
+            if appliedBarForce.get("qF") is not None : # Ya hay un qF
+                prev_qF = appliedBarForce["qF"]
+                qF = qF + prev_qF
+                appliedBarForce["qF"] = qF
+            else :
+                appliedBarForce.update({"qF" : qF})
+            
+        else :
+            print("Aviso: Las cargas sobre barras solo aplican para elementos tipo FRAME")
+            print("La carga será ignorada")
 
     return
