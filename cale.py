@@ -46,18 +46,20 @@ import numpy as np
 
 # print(sol)
 
-temp = np.full((6,1),1.0)
+# temp = np.full((6,1),1.0)
 
-my_dict = {"uno" : 1,
-           "dos" : 2,
-           "tres" : temp}
+# my_dict = {"uno" : 1,
+#            "dos" : 2,
+#            "tres" : temp}
 
-if my_dict.get("tres") is not None:
-    print("tiene 3")
-    last = my_dict["tres"]
-    last = last + temp
-    my_dict["tres"] = last
-else :
-    print("no tiene 3")
+# if my_dict.get("tres") is not None:
+#     print("tiene 3")
+#     last = my_dict["tres"]
+#     last = last + temp
+#     my_dict["tres"] = last
+# else :
+#     print("no tiene 3")
     
-print(my_dict)
+# print(my_dict)
+
+print("No hago nada")
