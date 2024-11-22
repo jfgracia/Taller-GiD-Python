@@ -30,3 +30,30 @@
 *loop materials
 *matnum() *MatProp(6) *MatProp(7) *MatProp(8)
 *end materials
+# Supports
+# Qty
+# NodeNumber    TX(1 or 0)  TY(1 or 0)  RZ(1 or 0)
+*Set Cond Point-Restraints *nodes
+*CondNumEntities
+*loop nodes *OnlyInCond
+*NodesNum *cond(1) *cond(2) *cond(3)
+*end nodes
+# Loads - Nodal
+# Qty
+# NodeNumber    FX(kN)  FY(kN)  MZ(kN-m)
+*Set Cond Point-Loads *nodes
+*CondNumEntities
+*loop nodes *OnlyInCond
+*NodesNum *cond(1) *cond(2) *cond(3)
+*end nodes
+# Load - Member
+# Qty
+# BarNumber a(m)    Fa(kN/m)    b(m)    Fb(kN/m)
+*Set Cond Line-Loads *elems
+*CondNumEntities
+*loop elems *OnlyInCond
+*elemsnum *cond(1) *cond(2) *cond(3) *cond(4)
+*end elems
+
+
+
