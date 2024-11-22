@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import sys
 
 # Esta es una linea de comentarios
 
@@ -63,3 +64,5 @@ import numpy as np
 # print(my_dict)
 
 print("No hago nada")
+
+print(sys.argv)

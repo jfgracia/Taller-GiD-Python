@@ -3,11 +3,21 @@ import Routines as rt
 import Solver as sl
 
 import numpy as np
-
+import sys
 
 # Lectura del modelo
-archivo = "Model.dat"
-model = io.ReadDataFile(archivo)
+# archivo = "Model.dat"
+GiD = True
+dataFileName = ""
+if len(sys.argv) > 1 : #Este programa se invoca desde GiD
+    fileName = sys.argv[1]
+    dataFileName = fileName + ".dat"
+    print("El modelo viene de un documento en GiD\n\n")
+else : #Este programa se invoca desde Visual Studio
+    dataFileName = "Model.dat"
+    print("El modelo es de prueba y se invoca desde Visual Studio\n\n")
+
+model = io.ReadDataFile(dataFileName)
 
 # Numeracion de los GDL
 dofData = rt.GenerateDOF(model)
@@ -48,11 +58,12 @@ D = {"Du" : Du,
 
 # Solucion de reacciones
 R = sl.SolveReactions(K,QF,Q,D)
-#print(R)
+print("Calcule las reacciones")
+print(R)
 
 # Solucion de fuerzas elementales
 sl.SolveElementForces(model,D)
-print("ok")
+print("Calcule las fuerzas de barras ok")
 
 # Salida de datos
 
