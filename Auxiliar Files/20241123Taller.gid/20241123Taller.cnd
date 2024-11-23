@@ -1,0 +1,39 @@
+NUMBER: 1 CONDITION: Point-Restraints
+CONDTYPE: over points
+CONDMESHTYPE: over nodes
+QUESTION: TX#CB#(0,1)
+VALUE: 0
+QUESTION: TY#CB#(0,1)
+VALUE: 0
+QUESTION: RZ#CB#(0,1)
+VALUE: 0
+END CONDITION
+NUMBER: 2 CONDITION: Point-Loads
+CONDTYPE: over points
+CONDMESHTYPE: over nodes
+QUESTION: FX
+VALUE: 0.0
+HELP: Force X Direction (kN)
+QUESTION: FY
+VALUE: 0.0
+HELP: Force Y Direction (kN)
+QUESTION: MZ
+VALUE: 0.0
+HELP: Moment Z Direction (kN-m)
+END CONDITION
+NUMBER: 3 CONDITION: Line-Loads
+CONDTYPE: over lines
+CONDMESHTYPE: over body elements
+QUESTION: a
+VALUE: 0.0
+HELP: Distance from initial node along member axis (m)
+QUESTION: Fa
+VALUE: 0.0
+HELP: Magnitude of distribute load in distance a paralell to local Y axis (kN/m)
+QUESTION: b
+VALUE: 0.0
+HELP: Distance from initial node along member axis (m)
+QUESTION: Fb
+VALUE: 0.0
+HELP: Magnitude of distribute load in distance b paralell to local Y axis (kN/m)
+END CONDITION
