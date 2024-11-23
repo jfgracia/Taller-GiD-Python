@@ -1,3 +1,5 @@
+import numpy as np
+
 # Funcion ReadDataFile
 #   Funcion que lee un archivo de texto la informacion del modelo
 #   y regresa un diccionario con los datos de la estructura
@@ -159,5 +161,49 @@ def reportMessage(outputFileName, message, GiD, flag="a"):
             outputFile.write(message)
     else:
         print(message)
+
+    return
+
+def ExportResultsFile(resultsFileName,model,D,R,dofData) :
+
+    #extraer la informacion del modelo
+    nodes = model["Nodes"]
+    bars  = model["Bars"]
+
+    dofArray       = dofData["DOFArray"]
+    nodeNumberList = dofData["NodeNumberList"]
+
+    Du = D["Du"]
+    Dk = D["Dk"]
+    disp = np.concatenate((Du,Dk))
+
+    with open(resultsFileName,"w") as resultsFile :
+
+        # Encabezados
+        resultsFile.write("GiD Post Results File 1.0\n\n")
+
+        # Exportar desplazamientos
+        # Encabezado
+        resultsFile.write("Result \"Displacements\" \"Lineal\" 1 Vector OnNodes\n")
+        resultsFile.write("ComponentNames \"X\", \"Y\", \"Z\"\n")
+        resultsFile.write("Values\n")
+
+        # Datos
+        for node in nodes:
+            nodeNumber = node["Number"]
+            index = nodeNumberList.index(nodeNumber)
+            nodeDisp = []
+            for j in range(2) :
+                dxy = 0.0
+                dof = dofArray[index,j]
+                dxy = disp[dof,0]
+                nodeDisp.append(dxy)
+            nodeDisp.append(float(0.0))
+            resultsFile.write("\t"+str(nodeNumber)+"\t"+str(nodeDisp[0])+"\t"+str(nodeDisp[1])+"\t"+str(nodeDisp[2])+"\n")
+
+        # Cerrar
+        resultsFile.write("End Values\n\n")
+
+
 
     return

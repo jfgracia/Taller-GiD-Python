@@ -1,0 +1,11 @@
+GiD Post Results File 1.0
+
+Result "Displacements" "Lineal" 1 Vector OnNodes
+ComponentNames "X", "Y", "Z"
+Values
+	1	0.0	0.0	0.0
+	2	0.0027205576644467313	-0.0006217831093135433	0.0
+	3	0.0037334531500491904	0.0	0.0
+	4	0.002574424603162757	-0.0007363167185302229	0.0
+End Values
+

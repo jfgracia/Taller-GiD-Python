@@ -104,4 +104,4 @@ message = message + "\n\n"
 io.reportMessage(logFileName,message,GiD)
 
 # Salida de datos
-
+io.ExportResultsFile(resultsFileName,model,D,R,dofData)
