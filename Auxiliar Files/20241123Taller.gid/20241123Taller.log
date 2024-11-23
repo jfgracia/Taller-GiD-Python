@@ -1,0 +1,38 @@
+Este modelo viene de un documento de GiD
+
+Modelo Leido
+Nodos:               4
+Barras:              5
+Materiales:          3
+Propiedades:         3
+Apoyos:              2
+Fuerzas Nodales:     2
+Fuerzas Elementales: 1
+
+
+Calculo de grados de libertad
+GDL Total:          12
+GDL Desconocidos:   9
+
+
+Generacion de matriz de rigidez...     OK
+
+
+Ensamble de matriz de rigidez...       OK
+
+
+Ensamble de fuerzas elementales...     OK
+
+
+Ensamble de fuerzas nodales...         OK
+
+
+Solucion de desplazamientos nodales... OK
+
+
+Solucion de reacciones...              OK
+
+
+Solucion de fuerzas elementales...     OK
+
+

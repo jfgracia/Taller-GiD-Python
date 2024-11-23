@@ -152,3 +152,12 @@ def ReadDataFile(dataFileName) :
                  "BarForces"    : barForces}
 
     return model
+
+def reportMessage(outputFileName, message, GiD, flag="a"):
+    if GiD :
+        with open(outputFileName,flag) as outputFile:
+            outputFile.write(message)
+    else:
+        print(message)
+
+    return

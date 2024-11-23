@@ -43,7 +43,7 @@ TITLE: Cross_Section_Properties
 QUESTION: Element_Type#CB#(FRAME,TRUSS)
 VALUE: FRAME
 QUESTION: Property_Name
-VALUE: COLUMN
+VALUE: BEAM
 HELP: Set property custon name without spaces
 QUESTION: A
 VALUE: 450.0
