@@ -1,0 +1,27 @@
+NUMBER: 1 MATERIAL: Bar
+TITLE:  Material_Properties
+QUESTION:   Material_Name
+VALUE:      STEEL_A992
+HELP:       Set material name without spaces
+QUESTION:   E
+VALUE:      200.0
+HELP:       Young Modulus (GPa)
+QUESTION:   nu
+VALUE:      0.3
+HELP:       Poisson Coefficient
+QUESTION:   rho
+VALUE:      7850.0
+HELP:       Density (kg/m^3)
+TITLE: Cross_Section_Properties
+QUESTION:   Element_Type#CB#(FRAME,TRUSS)
+VALUE:      FRAME
+QUESTION:   Property_Name
+VALUE:      Columnita
+HELP:       Set property custon name without spaces
+QUESTION:   A
+VALUE:      300.0
+HELP:       Cross section area (mm^2)
+QUESTION:   I
+VALUE:      400.0
+HELP:       Cross section inertia (10^6 mm^4)
+END MATERIAL
