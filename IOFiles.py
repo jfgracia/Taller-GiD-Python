@@ -169,9 +169,11 @@ def ExportResultsFile(resultsFileName,model,D,R,dofData) :
     #extraer la informacion del modelo
     nodes = model["Nodes"]
     bars  = model["Bars"]
+    restrictions = model["Restrictions"]
 
     dofArray       = dofData["DOFArray"]
     nodeNumberList = dofData["NodeNumberList"]
+    dofU           = dofData["UnknownDOFCount"]
 
     Du = D["Du"]
     Dk = D["Dk"]
@@ -186,6 +188,7 @@ def ExportResultsFile(resultsFileName,model,D,R,dofData) :
         # Encabezado
         resultsFile.write("Result \"Displacements\" \"Lineal\" 1 Vector OnNodes\n")
         resultsFile.write("ComponentNames \"X\", \"Y\", \"Z\"\n")
+        resultsFile.write("Unit m\n") 
         resultsFile.write("Values\n")
 
         # Datos
@@ -204,6 +207,103 @@ def ExportResultsFile(resultsFileName,model,D,R,dofData) :
         # Cerrar
         resultsFile.write("End Values\n\n")
 
+        # Exportar reacciones
+        # Encabezado
+        resultsFile.write("Result \"Reactions\" \"Lineal\" 1 Vector OnNodes\n")
+        resultsFile.write("ComponentNames \"RX\", \"RY\", \"MZ\"\n")
+        resultsFile.write("Unit kN,kN-m\n") 
+        resultsFile.write("Values\n")
+        for node in nodes:
+            nodeNumber = node["Number"]
+            index = nodeNumberList.index(nodeNumber)
+            reactions = []
+            for j in range(3) :
+                r_xyz = 0.0
+                dof = dofArray[index,j]
+                if dof >= dofU : #Hay reaccion en este nodo
+                    r_xyz = R[dof-dofU,0]
+                reactions.append(r_xyz)
+            resultsFile.write("\t"+str(nodeNumber)+"\t"+str(reactions[0])+"\t"+str(reactions[1])+"\t"+str(reactions[2])+"\n")
+
+        # Cerrar
+        resultsFile.write("End Values\n\n")
+
+        # Resultados de fuerzas en las barras
+        # Encabezados
+        resultsFile.write("GaussPoints \"L2\" ElemType Linear\n")
+        resultsFile.write("\tNumber of Gauss Points: 2\n")
+        resultsFile.write("\tNodes included\n")
+        resultsFile.write("\tNatural Coordinates: Internal\n")
+        resultsFile.write("End GaussPoints\n\n")
+
+        # Axiales
+        resultsFile.write("Result \"Axial\" \"Lineal\" 1 Scalar OnGaussPoints \"L2\"\n")
+        resultsFile.write("ComponentNames \"N\"\n")
+        resultsFile.write("Unit kN\n")  
+        resultsFile.write("Values\n")
+        for bar in bars:
+            qe = bar["qe"]
+            barNumber = bar["ID"]
+            valueEnd0 = 0.0
+            valueEnd1 = 0.0
+            if bar["Type"] == "TRUSS" :
+                valueEnd0 = -qe[0,0]
+                valueEnd1 =  qe[2,0]
+            elif bar["Type"] == "FRAME" :
+                valueEnd0 = -qe[0,0]
+                valueEnd1 =  qe[3,0]
+
+            resultsFile.write("\t" + str(barNumber) + "\t" + str(valueEnd0) + "\n")
+            resultsFile.write("\t\t" + str(valueEnd1) + "\n")
+        
+        # Cerrar
+        resultsFile.write("End Values\n\n")
+
+        # Axiales
+        resultsFile.write("Result \"Shear\" \"Lineal\" 1 Scalar OnGaussPoints \"L2\"\n")
+        resultsFile.write("ComponentNames \"V\"\n")
+        resultsFile.write("Unit kN\n")  
+        resultsFile.write("Values\n")
+        for bar in bars:
+            qe = bar["qe"]
+            barNumber = bar["ID"]
+            valueEnd0 = 0.0
+            valueEnd1 = 0.0
+            if bar["Type"] == "TRUSS" :
+                valueEnd0 =  qe[1,0]
+                valueEnd1 = -qe[3,0]
+            elif bar["Type"] == "FRAME" :
+                valueEnd0 =  qe[1,0]
+                valueEnd1 = -qe[4,0]
+
+            resultsFile.write("\t" + str(barNumber) + "\t" + str(valueEnd0) + "\n")
+            resultsFile.write("\t\t" + str(valueEnd1) + "\n")
+        
+        # Cerrar
+        resultsFile.write("End Values\n\n")
+
+        # Momentos Flectores
+        resultsFile.write("Result \"Flexural Moments\" \"Lineal\" 1 Scalar OnGaussPoints \"L2\"\n")
+        resultsFile.write("ComponentNames \"M\"\n")
+        resultsFile.write("Unit kN-m\n")  
+        resultsFile.write("Values\n")
+        for bar in bars:
+            qe = bar["qe"]
+            barNumber = bar["ID"]
+            valueEnd0 = 0.0
+            valueEnd1 = 0.0
+            if bar["Type"] == "TRUSS" :
+                valueEnd0 =  0.0
+                valueEnd1 =  0.0
+            elif bar["Type"] == "FRAME" :
+                valueEnd0 = -qe[3,0]
+                valueEnd1 =  qe[5,0]
+
+            resultsFile.write("\t" + str(barNumber) + "\t" + str(valueEnd0) + "\n")
+            resultsFile.write("\t\t" + str(valueEnd1) + "\n")
+        
+        # Cerrar
+        resultsFile.write("End Values\n\n")
 
 
     return

@@ -1,0 +1,76 @@
+GiD Post Results File 1.0
+
+Result "Displacements" "Lineal" 1 Vector OnNodes
+ComponentNames "X", "Y", "Z"
+Unit m
+Values
+	1	0.0	0.0	0.0
+	2	0.0037334531500491804	0.0	0.0
+	3	0.0027205576644467253	-0.0006217831093135433	0.0
+	4	0.002574424603162749	-0.0007363167185302223	0.0
+End Values
+
+Result "Reactions" "Lineal" 1 Vector OnNodes
+ComponentNames "RX", "RY", "MZ"
+Unit kN,kN-m
+Values
+	1	-9.999999999999986	14.639583333333347	0.0
+	2	0.0	19.110416666666655	0.0
+	3	0.0	0.0	0.0
+	4	0.0	0.0	0.0
+End Values
+
+GaussPoints "L2" ElemType Linear
+	Number of Gauss Points: 2
+	Nodes included
+	Natural Coordinates: Internal
+End GaussPoints
+
+Result "Axial" "Lineal" 1 Scalar OnGaussPoints "L2"
+ComponentNames "N"
+Unit kN
+Values
+	1	-16.580882915027825
+		-16.580882915027825
+	2	-19.63511249413926
+		-19.63511249413926
+	3	-3.2879938788894663
+		-3.2879938788894663
+	4	0.8744930457876755
+		0.8744930457876755
+	5	3.2354993028241315
+		3.2354993028241315
+End Values
+
+Result "Shear" "Lineal" 1 Scalar OnGaussPoints "L2"
+ComponentNames "V"
+Unit kN
+Values
+	1	7.411600557740677
+		7.411600557740677
+	2	0.6995944366301359
+		0.6995944366301359
+	3	16.05618708755521
+		-7.693812912444791
+	4	0.0
+		-0.0
+	5	0.0
+		-0.0
+End Values
+
+Result "Flexural Moments" "Lineal" 1 Scalar OnGaussPoints "L2"
+ComponentNames "M"
+Unit kN-m
+Values
+	1	16.580882915027825
+		22.234801673222023
+	2	19.63511249413926
+		2.098783309890422
+	3	3.2879938788894663
+		17.901216690109532
+	4	0.0
+		0.0
+	5	0.0
+		0.0
+End Values
+

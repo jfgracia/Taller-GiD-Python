@@ -20,6 +20,7 @@ if(len(sys.argv) > 1) :  # Este prrograma se invoca desde el GiD
     message = "Este modelo viene de un documento de GiD\n\n"
 else : # Este programa se invoca desde Visual Studio
     dataFileName = "Model.dat" #<== Modificar segun el user
+    resultsFileName = "ModelOut.txt"
     GiD = False
     message = "Este modelo es de prueba y se invoca desde Visual Studio\n\n"
 
