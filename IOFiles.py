@@ -253,6 +253,52 @@ def ExportResultsFile(resultsFileName,model,D,R,dofData) :
 
             resultsFile.write("\t" + str(barNumber) + "\t" + str(valueEnd0) + "\n")
             resultsFile.write("\t\t" + str(valueEnd1) + "\n")
+
+        # Cerrar
+        resultsFile.write("End Values\n\n")
+
+        # Cortantes
+        resultsFile.write("Result \"Shear\" \"Lineal\" 1 Scalar OnGaussPoints \"L2\"\n")
+        resultsFile.write("ComponentNames \"V\"\n")
+        resultsFile.write("Unit kN\n")  
+        resultsFile.write("Values\n")
+        for bar in bars:
+            qe = bar["qe"]
+            barNumber = bar["ID"]
+            valueEnd0 = 0.0
+            valueEnd1 = 0.0
+            if bar["Type"] == "TRUSS":
+                valueEnd0 =  qe[1,0]
+                valueEnd1 = -qe[3,0]
+            elif bar["Type"] == "FRAME":
+                valueEnd0 =  qe[1,0]
+                valueEnd1 = -qe[4,0]
+
+            resultsFile.write("\t" + str(barNumber) + "\t" + str(valueEnd0) + "\n")
+            resultsFile.write("\t\t" + str(valueEnd1) + "\n")
+            
+        # Cerrar
+        resultsFile.write("End Values\n\n")
+
+        # Momento Flector
+        resultsFile.write("Result \"Flexural Moments\" \"Lineal\" 1 Scalar OnGaussPoints \"L2\"\n")
+        resultsFile.write("ComponentNames \"M\"\n")
+        resultsFile.write("Unit kN\n")  
+        resultsFile.write("Values\n")
+        for bar in bars:
+            qe = bar["qe"]
+            barNumber = bar["ID"]
+            valueEnd0 = 0.0
+            valueEnd1 = 0.0
+            if bar["Type"] == "TRUSS":
+                valueEnd0 = 0.0
+                valueEnd1 = 0.0
+            elif bar["Type"] == "FRAME":
+                valueEnd0 = -qe[2,0]
+                valueEnd1 =  qe[5,0]
+
+            resultsFile.write("\t" + str(barNumber) + "\t" + str(valueEnd0) + "\n")
+            resultsFile.write("\t\t" + str(valueEnd1) + "\n")
             
         # Cerrar
         resultsFile.write("End Values\n\n")

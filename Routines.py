@@ -1,6 +1,16 @@
 import numpy as np
 import math
 
+## Funciones auxiliares
+DEFAULT_TOLERANCE = 0.00001
+
+def gt(a,b,tolerance = DEFAULT_TOLERANCE):
+    return a > b + tolerance
+
+def ge(a,b,tolerance = DEFAULT_TOLERANCE):
+    return a >= b + tolerance
+
+
 #   funcion GenerateDOF
 #   Calcula los grados de libertad nodales, primero los 
 #   desconocidos, al final los conocidos
@@ -171,11 +181,11 @@ def FixedEndMoment_FRAME(L,a,wa,b,wb):
     qF = np.full((6,1),0.0)
 
     # Verficaciones de seguridad
-    if a>=b :
+    if ge(a,b) :
         print("Error en carga, a >=b")
         return qF
     
-    if b > L:
+    if gt(b,L):
         print("Error en carga, b > L")
         return qF
     
