@@ -296,7 +296,7 @@ def ExportResultsFile(resultsFileName,model,D,R,dofData) :
                 valueEnd0 =  0.0
                 valueEnd1 =  0.0
             elif bar["Type"] == "FRAME" :
-                valueEnd0 = -qe[3,0]
+                valueEnd0 = -qe[2,0]
                 valueEnd1 =  qe[5,0]
 
             resultsFile.write("\t" + str(barNumber) + "\t" + str(valueEnd0) + "\n")

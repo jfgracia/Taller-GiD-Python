@@ -19,8 +19,8 @@ if(len(sys.argv) > 1) :  # Este prrograma se invoca desde el GiD
     resultsFileName = fileName + ".post.res"
     message = "Este modelo viene de un documento de GiD\n\n"
 else : # Este programa se invoca desde Visual Studio
-    dataFileName = "Model.dat" #<== Modificar segun el user
-    resultsFileName = "ModelOut.txt"
+    dataFileName = "/Users/jfgracia/Desktop/20241130Taller.gid/20241130Taller.dat" #<== Modificar segun el user
+    resultsFileName = "/Users/jfgracia/Desktop/20241130Taller.gid/20241130Taller.post.res"
     GiD = False
     message = "Este modelo es de prueba y se invoca desde Visual Studio\n\n"
 

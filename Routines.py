@@ -16,6 +16,17 @@ import math
 #                                   y 3 columnas representado el GDLx, GDLy y GDLrz
 #               "NodeNumberList"  : Lista con numero de nodos
 
+DEFAULT_TOLERANCE = 0.00001
+
+def gt(a,b,tolerance = DEFAULT_TOLERANCE) :
+    return a > b + tolerance
+
+def ge(a,b,tolerance = DEFAULT_TOLERANCE) :
+    return a >= b + tolerance
+
+def eq(a,b,tolerance = DEFAULT_TOLERANCE) :
+    return abs(a-b) <= tolerance
+
 def GenerateDOF(model) :
 
     dofList = []
@@ -171,11 +182,12 @@ def FixedEndMoment_FRAME(L,a,wa,b,wb):
     qF = np.full((6,1),0.0)
 
     # Verficaciones de seguridad
-    if a>=b :
+    if eq(a,0.0) and eq(b,0.0) : # Caso especial para definir que es en toda la longitud
+        b = L
+    elif ge(a,b) :
         print("Error en carga, a >=b")
         return qF
-    
-    if b > L:
+    elif gt(b,L) :
         print("Error en carga, b > L")
         return qF
     
