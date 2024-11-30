@@ -29,11 +29,11 @@ VALUE:      0.0
 HELP:       Distance from initial node along member axis (m)
 QUESTION:   Fa
 VALUE:      0.0
-HELP:       Magnitude of distribute load in distance a paralell to local Y axis (kN/m)
+HELP:       Magnitude of distribute load in distance "a" paralell to local Y axis (kN/m)
 QUESTION:   b
 VALUE:      0.0
-HELP:       Distance from initial node along member axis (m)
+HELP:       Distance from initial node along member axis (m) - If both a and b are equal to 0 means the load is applied on full length
 QUESTION:   Fb
 VALUE:      0.0
-HELP:       Magnitude of distribute load in distance b paralell to local Y axis (kN/m)
+HELP:       Magnitude of distribute load in distance "b" paralell to local Y axis (kN/m)
 END CONDITION

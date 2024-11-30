@@ -10,6 +10,9 @@ def gt(a,b,tolerance = DEFAULT_TOLERANCE):
 def ge(a,b,tolerance = DEFAULT_TOLERANCE):
     return a >= b + tolerance
 
+def eq(a,b,tolerance = DEFAULT_TOLERANCE):
+    return abs(a-b) <= tolerance
+
 
 #   funcion GenerateDOF
 #   Calcula los grados de libertad nodales, primero los 
@@ -181,11 +184,14 @@ def FixedEndMoment_FRAME(L,a,wa,b,wb):
     qF = np.full((6,1),0.0)
 
     # Verficaciones de seguridad
-    if ge(a,b) :
+    if eq(a,0.0) and eq(b,0.0) : # Caso especuial para definir carga en toda la longitud
+        b = L
+        
+    elif ge(a,b) :
         print("Error en carga, a >=b")
         return qF
     
-    if gt(b,L):
+    elif gt(b,L):
         print("Error en carga, b > L")
         return qF
     
